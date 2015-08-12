@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_MAIN
-#include "Vector.hpp"
+#include "../Vector.hpp"
 #include "catch.hpp"
 
 
