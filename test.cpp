@@ -1,39 +1,51 @@
-#include <iostream>
+#define CATCH_CONFIG_MAIN
 #include "Vector.hpp"
-#include <vector>
-using namespace std;
+#include "catch.hpp"
 
-int main()
+
+TEST_CASE("reserve test", "[reserve]")
 {
-    Vector<int> x(15, 5);
-    Vector<int> y(20, 10);
-    Vector<int> z = Vector<int>(5, 35);
+    Vector<int> vec;
+    vec.reserve(10);
 
-    Vector<int>::iterator iter;
-    Vector<int>::iterator iter2;
-
-    if (x != y)
-        std::cout << "x not the same as y" << std::endl;
-
-    iter = x.begin();
-    iter2 = y.begin();
-
-    x.push_back(15);
-    x.push_back(6);
-    x.push_back(3);
-
-    for (auto &a: x)
-        std::cout << " " << a << " ";
-    std::cout << std::endl;
-
-    cout    << "Hello World! " << *iter
-            << " " << x.capacity() << " "
-            << " " << x.max_size() << " "
-            << " " << std::boolalpha << x.empty() << " "
-            << " " << x.front() << " "
-            << " " << x.back() << " "
-         << endl;
-
-    return 0;
+    REQUIRE(vec.capacity() == 10);
 }
 
+TEST_CASE("push_back test - single velue", "[push_back][single value]")
+{
+    Vector<int> vec;
+    vec.push_back(5);
+
+    REQUIRE(vec[0] == 5);
+}
+
+TEST_CASE("begin test", "[begin]")
+{
+    Vector<int> vec(10, 5);
+
+    REQUIRE(*(vec.begin()) == 5);
+}
+
+TEST_CASE("end test", "[end]")
+{
+    Vector<int> vec(10, 5);
+
+    // end() points one element after Vector last element
+    REQUIRE(*(vec.end() - sizeof(int)) == 5);
+}
+
+TEST_CASE("comparision test - size", "[comparision][size]")
+{
+    Vector<int> vec(15, 5);
+    Vector<int> y(20, 5);
+
+    REQUIRE(vec != y);
+}
+
+TEST_CASE("comparision test - value", "[comparision][value]")
+{
+    Vector<int> vec(20, 3);
+    Vector<int> y(20, 5);
+
+    REQUIRE(vec != y);
+}
